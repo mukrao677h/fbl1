@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Most Wanted</title>
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin-top: 0;
+            padding-left: 100px;
+            background: url(Screenshot\ \(2\)\ \(1\)x.png) no-repeat center center fixed;
+            background-size: contain;
+            color: #333;
+            height: 100vh;
+        }
+
+        /* Navigation Menu */
+        nav {
+            background-color: rgba(0, 0, 0, 0.0);
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 20px;
+            font-size: 1.2em;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            color: #3498db;
+        }
+
+        /* Main Container Styles */
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 400px;
+            height: auto;
+            width: 100%;
+            margin-left: 65%;
+            margin-top: 100px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #fff;
+            margin-top: 1px;
+            font-weight: 600;
+        }
+
+        /* Description Section */
+        .description {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            color: #ddd;
+            line-height: 1.5;
+        }
+
+        input {
+            padding: 15px;
+            font-size: 1.1em;
+            width: 80%;
+            margin: 20px 0;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            color: #333;
+            background: #fff;
+        }
+
+        input:focus {
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.7);
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            margin: 20px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Employee Details Section */
+        .employee-details {
+            margin-top: 30px;
+            background-color: #34495e;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: left;
+        }
+
+        .employee-details h2 {
+            font-size: 1.8em;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .details-section {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #2c3e50;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .details-section p {
+            margin: 0;
+            color: #ecf0f1;
+            font-size: 1.1em;
+            font-weight: 400;
+        }
+
+        .details-section span {
+            font-weight: 600;
+            color: #3498db;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background-color: #27ae60;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            color: #fff;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .download-btn:hover {
+            background-color: #2ecc71;
+        }
+
+        /* Error Message */
+        .error-message {
+            color: #e74c3c;
+            font-size: 1.2em;
+            margin-top: 15px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            input {
+                width: 90%;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .employee-details {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h1>Criminal Search Box</h1>
+
+        <!-- Description Section -->
+        <div class="description">
+            <p>
+                This system allows you to search for Criminal details based on their unique Case Number. 
+                It provides information such as their name, crime, status, contact details, 
+                and more. The purpose of this system is to make it easier for authorized personnel 
+                to retrieve Criminal information quickly. By entering their Name or Case Number in the search box, 
+                you can access all necessary details about that particular case and also download a 
+                custom PDF containing their detailed crime.
+            </p>
+        </div>
+
+        <!-- Search Bar -->
+        <input type="text" id="employeeId" placeholder="Enter Name or Case Number" />
+        <button onclick="searchEmployee()">Search</button>
+
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loadingSpinner"></div>
+
+        <!-- Employee Details -->
+        <div id="employeeDetails">
+            <!-- Details will appear here after search -->
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+
+    <script>
+        // Define employee data with a mapping to custom PDF files
+        const employees = [
+            {
+                id: "E001",
+                name: "John Doe",
+                crime: "Child Pornography Buying, Aduld Content Making",
+                status: "Investigation in process",
+                email: "john.doe@example.com",
+                phone: "123-456-7890",
+                pdf: "pdfs/employee_John_Doe.pdf",  // Path to the custom PDF
+            },
+            {
+                id: "E002",
+                name: "Jane Smith",
+                crime: "Child Pornography Buying, Aduld Content Making",
+                status: "Investigation in process",
+                email: "jane.smith@example.com",
+                phone: "987-654-3210",
+                pdf: "pdfs/employee_Jane_Smith.pdf",  // Path to the custom PDF
+            },
+            {
+                id: "E003",
+                name: "Samuel Green",
+                crime: "Child Pornography Buying, Aduld Content Making",
+                status: "Investigation in process",
+                email: "samuel.green@example.com",
+                phone: "555-555-5555",
+                pdf: "FBI SECURE PDF-1.pdf",  // Path to the custom PDF
+            },
+            {
+                id: "E25874",
+                name: "Samuel Green",
+                crime: "Child Pornography Buying, Aduld Content Making",
+                status: "Investigation in process",
+                email: "samuel.green@example.com",
+                phone: "555-555-5555",
+                pdf: "FBI SECURE PDF-1.pdf",  // Path to the custom PDF
+            },
+            // Add more employee details as needed
+        ];
+
+        // Function to search and display employee details
+        function searchEmployee() {
+            const employeeId = document.getElementById("employeeId").value.trim().toUpperCase();
+            const employeeDetailsDiv = document.getElementById("employeeDetails");
+            const errorMessageDiv = document.getElementById("errorMessage");
+            const loadingSpinner = document.getElementById("loadingSpinner");
+
+            // Clear previous search results and error message
+            employeeDetailsDiv.innerHTML = "";
+            errorMessageDiv.innerHTML = "";
+
+            // Show loading spinner
+            loadingSpinner.style.display = "block";
+
+            // Simulate search delay (for demonstration purposes)
+            setTimeout(() => {
+                // Find employees that match the input ID
+                const matchedEmployees = employees.filter(emp => emp.id.toUpperCase().includes(employeeId));
+
+                // Hide loading spinner after search
+                loadingSpinner.style.display = "none";
+
+                if (matchedEmployees.length > 0) {
+                    // Display matched employee details
+                    matchedEmployees.forEach(employee => {
+                        const employeeDiv = document.createElement("div");
+                        employeeDiv.classList.add("employee-details");
+
+                        // Adding employee details dynamically with a "tracking style" layout
+                        employeeDiv.innerHTML = `
+                            <h2>Search Results</h2>
+                            <div class="details-section">
+                                <p><span>Case Number:</span> ${employee.id}</p>
+                            </div>
+                            <div class="details-section">
+                                <p><span>Name:</span> ${employee.name}</p>
+                            </div>
+                            <div class="details-section">
+                                <p><span>Crime:</span> ${employee.crime}</p>
+                            </div>
+                            <div class="details-section">
+                                <p><span>Status:</span> ${employee.status}</p>
+                            </div>
+                            <div class="details-section">
+                                <p><span>Email:</span> ${employee.email}</p>
+                            </div>
+                            <div class="details-section">
+                                <p><span>Phone:</span> ${employee.phone}</p>
+                            </div>
+                            <a href="${employee.pdf}" target="_blank">
+                                <button class="download-btn">Download Custom PDF</button>
+                            </a>
+                        `;
+                        
+                        // Append employee div to the container
+                        employeeDetailsDiv.appendChild(employeeDiv);
+                    });
+                } else {
+                    // Display error message if no employee is found
+                    errorMessageDiv.innerHTML = "Invalid Name or Case Number";
+                }
+            }, 1000);  // Simulate a 1-second delay for search
+        }
+    </script>
+</body>
+</html>
